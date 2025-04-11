@@ -1,0 +1,10 @@
+
+/node_modules
+/vendor
+/public/build
+.env
+public/hot
+/public/build
+public/build/manifest.json
+.env
+.env

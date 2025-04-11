@@ -1,0 +1,7 @@
+{
+    "name" : "Refund",
+    "unique_identifier" : "refund",
+    "version" : "1.0",
+    "minimum_item_version" : "1.2",
+    "addon_banner" : "banner.png"
+}
