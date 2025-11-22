@@ -7,41 +7,34 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\Category\CategoryRequest;
 
-class CategoryController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(): Response
+    public function index():Response
     {
-        $record=DB::table('categories')->paginate(10);
-        return Inertia::render('DashCategory',[
-            'record'=>$record,
+        $users = DB::table('users')->paginate(10);
+        return Inertia::render('DashUser',[
+            'users'=>$users,
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create(Request $request):Response
+    public function create()
     {
-       return Inertia::render('dashboard/FormCategory');
+        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CategoryRequest $request)
-    {  
-       DB::table('categories')->insert([
-        'name' => $request->name,
-        'description' => $request->description,
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
-        return redirect()->route('category');
+    public function store(Request $request)
+    {
+        //
     }
 
     /**

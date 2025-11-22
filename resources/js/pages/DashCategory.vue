@@ -1,9 +1,16 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
-import { dashboard } from '@/routes';
+import { categorycreate, dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
+import { Head, Link } from '@inertiajs/vue3';
+
+type Category = {
+    data: Array<{
+        id: number;
+        name: string;
+        description: string;
+    }>;
+};
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -11,6 +18,9 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard().url,
     },
 ];
+const props = defineProps<{
+    record: Category;
+}>();
 </script>
 
 <template>
@@ -18,19 +28,26 @@ const breadcrumbs: BreadcrumbItem[] = [
 
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
-            <div class="grid auto-rows-min gap-4 md:grid-cols-3">
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
-                <div class="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
-                    <PlaceholderPattern />
-                </div>
+            <div class="flex justify-center rounded-lg border border-[#19140035] p-2">
+                <Link :href="categorycreate()"> Create category </Link>
             </div>
             <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <PlaceholderPattern />
+                <v-table>
+                    <thead>
+                        <tr>
+                            <th class="text-left">id</th>
+                            <th class="text-left">name</th>
+                            <th class="text-left">description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for="item in props.record.data" :key="item.id">
+                            <td>{{ item.id }}</td>
+                            <td>{{ item.name }}</td>
+                            <td>{{ item.description }}</td>
+                        </tr>
+                    </tbody>
+                </v-table>
             </div>
         </div>
     </AppLayout>

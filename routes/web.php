@@ -1,7 +1,10 @@
 <?php
 
+namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
+use App\Http\Controllers\Dashboard\UserController;
+use App\Http\Controllers\Dashboard\CategoryController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome',[
@@ -14,15 +17,18 @@ Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard');
     })->name('dashboard');
-    Route::get('/category', function () {
-        return Inertia::render('DashCategory');
-    })->name('category');
+    Route::resource('/category', CategoryController::class)->names([
+        'index' => 'category',
+        'create' => 'categorycreate',
+        'store' => 'categorystore',
+        ]);
     Route::get('/product',function(){
         return Inertia::render('DashProduct');
     })->name('product');
-    Route::get('/user',function(){
-        return Inertia::render('DashUser');
-    })->name('user');
+    Route::resource('/user', UserController::class)->names([
+        'index' => 'user',
+        'create' => 'user.create'
+        ]);
 });
 
 require __DIR__.'/settings.php';

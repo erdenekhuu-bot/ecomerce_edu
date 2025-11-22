@@ -16,8 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug');
             $table->text('description');
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            $table->mediumInteger('category_id');
+            $table->foreignId('category_id')->constrained()->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('price', 10, 2);
             $table->timestamps();
         });
