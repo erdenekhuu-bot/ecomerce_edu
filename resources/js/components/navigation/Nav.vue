@@ -9,7 +9,7 @@ defineProps<{
 <template>
     <header class="bg-white p-4 text-[#1b1b18]">
         <nav class="flex items-center justify-between gap-4">
-            <b class="">Exclusive</b>
+            <b>{{ title }}</b>
             <div class="flex items-center gap-10">
                 <Link class="hover:underline">Home</Link>
                 <Link class="hover:underline">Contact</Link>
