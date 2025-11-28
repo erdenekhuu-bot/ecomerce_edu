@@ -8,7 +8,7 @@ use App\Http\Controllers\Dashboard\CategoryController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome',[
-        'bannerUrl' => asset('homebanner.png'),
+        'bannerUrl' => asset('home.png'),
     ]);
 })->name('home');
 
