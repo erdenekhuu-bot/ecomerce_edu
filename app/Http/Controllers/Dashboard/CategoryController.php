@@ -36,14 +36,14 @@ class CategoryController extends Controller
      */
     public function store(CategoryRequest $request):RedirectResponse
     {  
-       $data=$request->validated();
+       $rule=$request->validated();
        DB::table('categories')->insert([
-        'name' => $data->name,
-        'description' => $data->description,
-        'created_at' => now(),
-        'updated_at' => now(),
-    ]);
-        return redirect()->route('category');
+            'name' => $rule['name'],
+            'description' => $rule['description'],
+            'created_at' => now(),
+            'updated_at' => now(),
+       ]);
+       return redirect()->route('category');
     }
 
     /**
