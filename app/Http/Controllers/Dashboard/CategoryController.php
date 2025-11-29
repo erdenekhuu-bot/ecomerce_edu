@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\Category\CategoryRequest;
+use Illuminate\Http\RedirectResponse;
 
 class CategoryController extends Controller
 {
@@ -33,11 +34,12 @@ class CategoryController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(CategoryRequest $request)
+    public function store(CategoryRequest $request):RedirectResponse
     {  
+       $data=$request->validated();
        DB::table('categories')->insert([
-        'name' => $request->name,
-        'description' => $request->description,
+        'name' => $data->name,
+        'description' => $data->description,
         'created_at' => now(),
         'updated_at' => now(),
     ]);

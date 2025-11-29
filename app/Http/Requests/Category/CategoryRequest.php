@@ -26,4 +26,11 @@ class CategoryRequest extends FormRequest
              'description' => ['required','string'],
         ];
     }
+    public function messages(): array
+    {
+        return [
+            'name.required' => 'The name field is required.',
+            'description.required' => 'The description field is required.',
+        ];
+    }
 }
