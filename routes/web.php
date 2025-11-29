@@ -5,12 +5,9 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
+use App\Http\Controllers\Dashboard\ProductController;
 
-Route::get('/', function () {
-    return Inertia::render('Welcome',[
-        'bannerUrl' => asset('home.png'),
-    ]);
-})->name('home');
+Route::get('/', [Welcome::class,'index'])->name('home');
 
 
 Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
@@ -22,9 +19,9 @@ Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
         'create' => 'categorycreate',
         'store' => 'categorystore',
         ]);
-    Route::get('/product',function(){
-        return Inertia::render('DashProduct');
-    })->name('product');
+    Route::resource('/product', ProductController::class)->names([
+        'index'=> 'product',
+    ]);
     Route::resource('/user', UserController::class)->names([
         'index' => 'user',
         'create' => 'user.create'

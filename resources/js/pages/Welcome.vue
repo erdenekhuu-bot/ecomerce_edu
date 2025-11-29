@@ -2,8 +2,14 @@
 import Nav from '@/components/navigation/Nav.vue';
 import { Head } from '@inertiajs/vue3';
 
-defineProps<{
+const props = defineProps<{
     bannerUrl: string;
+    category: Array<{
+        id: number;
+        image: string;
+        name: string;
+        description: string;
+    }>;
 }>();
 </script>
 
@@ -14,7 +20,6 @@ defineProps<{
     </Head>
     <section class="">
         <Nav title="Exclusive" />
-
         <main class="w-full bg-white text-black">
             <v-container>
                 <section class="flex">
@@ -30,7 +35,22 @@ defineProps<{
                         <p class="p-4 text-sm">Health & Beauty</p>
                     </div>
                     <div class="w-2/2 p-4">
-                        <v-img cover :src="bannerUrl" class="object-cover" />
+                        <v-img cover :src="props.bannerUrl" class="object-cover" />
+                    </div>
+                </section>
+            </v-container>
+            <v-container>
+                <section v-if="props.category" class="">
+                    <p class="text-2xl font-bold">Browse By Category</p>
+                    <div class="flex">
+                        <div v-for="item in props.category" :key="item.id" class="m-4 h-[145px] w-[170px] rounded-lg border p-4">
+                            <div class="text-center">
+                                <span class="font-bold">{{ item.name }}</span>
+                                <div class="flex justify-center">
+                                    <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </section>
             </v-container>

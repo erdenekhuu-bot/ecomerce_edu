@@ -37,9 +37,18 @@ class CategoryController extends Controller
     public function store(CategoryRequest $request):RedirectResponse
     {  
        $rule=$request->validated();
+       if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            // $image->storeAs('images', $imageName, 'public');
+            // $imagePath = 'storage/images/'.$imageName;
+            $image->move(public_path('images'), $imageName);
+            $imagePath = 'images/'.$imageName;
+        }
        DB::table('categories')->insert([
             'name' => $rule['name'],
             'description' => $rule['description'],
+            'image'=>$imagePath,
             'created_at' => now(),
             'updated_at' => now(),
        ]);

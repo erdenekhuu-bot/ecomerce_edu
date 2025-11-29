@@ -7,6 +7,7 @@ import { Head, Link } from '@inertiajs/vue3';
 type Category = {
     data: Array<{
         id: number;
+        image: string;
         name: string;
         description: string;
     }>;
@@ -36,6 +37,7 @@ const props = defineProps<{
                     <thead>
                         <tr>
                             <th class="text-left">id</th>
+                            <th class="text-center">image</th>
                             <th class="text-left">name</th>
                             <th class="text-left">description</th>
                         </tr>
@@ -43,6 +45,10 @@ const props = defineProps<{
                     <tbody>
                         <tr v-for="item in props.record.data" :key="item.id">
                             <td>{{ item.id }}</td>
+                            <td>
+                                <img v-if="item.image" :src="'/' + item.image" alt="" class="h-16 w-16 rounded object-cover" />
+                                <span v-else class="text-gray-400">No Image</span>
+                            </td>
                             <td>{{ item.name }}</td>
                             <td>{{ item.description }}</td>
                         </tr>
