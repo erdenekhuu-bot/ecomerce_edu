@@ -24,13 +24,14 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <Form v-bind="CategoryController.store.form()" v-slot="{ errors, processing }" :reset-on-success="['name', 'description']">
                     <v-text-field name="name" label="Category name" />
                     <InputError :message="errors.name" />
-                    <v-file-input label="Category icon" name="image" counter multiple show-size />
+                    <v-file-input style="width: 20%" label="Category icon" name="image" counter multiple show-size />
                     <InputError :message="errors.image" />
                     <v-text-field name="description" label="Description" />
                     <InputError :message="errors.description" />
+                    <v-select name="meta" style="width: 30%" label="Meta attribute" :message="errors.meta" :items="['products', 'services']" />
                     <Button type="submit" class="mt-2 w-full" tabindex="3" :disabled="processing">
                         <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
-                        Save category
+                        Submit
                     </Button>
                 </Form>
             </div>

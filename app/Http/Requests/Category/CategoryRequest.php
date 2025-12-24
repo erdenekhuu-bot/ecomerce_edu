@@ -25,6 +25,7 @@ class CategoryRequest extends FormRequest
              'name' => ['required','string'],
              'description' => ['required','string'],
              'image'=>['required'],
+             'meta'=>['required']
         ];
     }
     public function messages(): array
@@ -32,7 +33,8 @@ class CategoryRequest extends FormRequest
         return [
             'name.required' => 'The name field is required.',
             'description.required' => 'The description field is required.',
-            'image.required'=>'The image field is required.'
+            'image.required'=>'The image field is required.',
+            'meta.required'=>'The meta field is required.'
         ];
     }
 }

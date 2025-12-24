@@ -2,7 +2,8 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { categorycreate, dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 type Category = {
     data: Array<{
@@ -10,7 +11,11 @@ type Category = {
         image: string;
         name: string;
         description: string;
+        meta: string;
     }>;
+    last_page: number;
+    current_page: number;
+    total: number;
 };
 
 const breadcrumbs: BreadcrumbItem[] = [
@@ -19,9 +24,24 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard().url,
     },
 ];
+
+const changePage = (page: number) => {
+    router.get(
+        '/category',
+        { page },
+        {
+            preserveState: true,
+            preserveScroll: true,
+        },
+    );
+};
+
 const props = defineProps<{
     record: Category;
 }>();
+
+const page = ref(props.record.current_page);
+const totalPages = ref(props.record.total);
 </script>
 
 <template>
@@ -33,27 +53,27 @@ const props = defineProps<{
                 <Link :href="categorycreate()"> Create category </Link>
             </div>
             <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <v-table>
-                    <thead>
-                        <tr>
-                            <th class="text-left">id</th>
-                            <th class="text-center">image</th>
-                            <th class="text-left">name</th>
-                            <th class="text-left">description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for="item in props.record.data" :key="item.id">
-                            <td>{{ item.id }}</td>
-                            <td>
-                                <img v-if="item.image" :src="'/' + item.image" alt="" class="h-16 w-16 rounded object-cover" />
-                                <span v-else class="text-gray-400">No Image</span>
-                            </td>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.description }}</td>
-                        </tr>
-                    </tbody>
-                </v-table>
+                <v-data-table-server
+                    density="compact"
+                    item-key="id"
+                    :headers="[
+                        { title: 'id', key: 'id' },
+                        { title: 'image', key: 'image' },
+                        { title: 'name', key: 'name' },
+                        { title: 'description', key: 'description' },
+                        { title: 'meta attribute', key: 'meta' },
+                    ]"
+                    :items="props.record.data"
+                    :items-length="props.record.total"
+                    :page="props.record.current_page"
+                    :items-per-page="5"
+                    @update:page="changePage"
+                >
+                    <template #item.image="{ item }">
+                        <img v-if="item.image" :src="'/' + item.image" alt="" class="h-16 w-16 rounded object-cover" />
+                        <span v-else class="text-gray-400">No Image</span>
+                    </template>
+                </v-data-table-server>
             </div>
         </div>
     </AppLayout>

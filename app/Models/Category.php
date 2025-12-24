@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Category extends Model {
     protected $table = 'categories';
-    protected $fillable = ['name', 'description','image'];
+    protected $fillable = ['name', 'description','image','meta'];
     protected $primaryKey = 'id';
     protected $timestamps = true;
 

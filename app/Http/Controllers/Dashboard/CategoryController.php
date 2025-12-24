@@ -17,7 +17,7 @@ class CategoryController extends Controller
      */
     public function index(): Response
     {
-        $record=DB::table('categories')->paginate(10);
+        $record=DB::table('categories')->paginate(5);
         return Inertia::render('DashCategory',[
             'record'=>$record,
         ]);
@@ -49,6 +49,7 @@ class CategoryController extends Controller
             'name' => $rule['name'],
             'description' => $rule['description'],
             'image'=>$imagePath,
+            'meta'=>$rule['meta'],
             'created_at' => now(),
             'updated_at' => now(),
        ]);

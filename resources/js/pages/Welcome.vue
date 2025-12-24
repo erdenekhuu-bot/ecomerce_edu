@@ -23,7 +23,7 @@ const props = defineProps<{
         <main class="w-full bg-white text-black">
             <v-container>
                 <section class="flex">
-                    <div class="border border-[#19140035] pr-4">
+                    <div class="w-1/4 border border-[#19140035]">
                         <p class="p-4 text-sm">Woman's Fashion</p>
                         <p class="p-4 text-sm">Men's Fashion</p>
                         <p class="p-4 text-sm">Electronics</p>
@@ -34,7 +34,7 @@ const props = defineProps<{
                         <p class="p-4 text-sm">Gcroceris & Pets</p>
                         <p class="p-4 text-sm">Health & Beauty</p>
                     </div>
-                    <div class="w-2/2 p-4">
+                    <div class="w-3/4 p-4">
                         <v-img cover :src="props.bannerUrl" class="object-cover" />
                     </div>
                 </section>
