@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Nav from '@/components/navigation/Nav.vue';
 import { Head } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 const props = defineProps<{
     bannerUrl: string;
@@ -10,7 +11,18 @@ const props = defineProps<{
         name: string;
         description: string;
     }>;
+    service: Array<{
+        id: number;
+        image: string;
+        name: string;
+        description: string;
+    }>;
 }>();
+
+const selectedImage = ref<string | null>(null);
+const getImage = (imageUrl: string) => {
+    selectedImage.value = imageUrl;
+};
 </script>
 
 <template>
@@ -22,20 +34,34 @@ const props = defineProps<{
         <Nav title="Exclusive" />
         <main class="w-full bg-white text-black">
             <v-container>
-                <section class="flex">
-                    <div class="w-1/4 border border-[#19140035]">
-                        <p class="p-4 text-sm">Woman's Fashion</p>
-                        <p class="p-4 text-sm">Men's Fashion</p>
-                        <p class="p-4 text-sm">Electronics</p>
-                        <p class="p-4 text-sm">Home & Lifestyle</p>
-                        <p class="p-4 text-sm">Medicine</p>
-                        <p class="p-4 text-sm">Sports & Outdoor</p>
-                        <p class="p-4 text-sm">Baby's & Toys</p>
-                        <p class="p-4 text-sm">Gcroceris & Pets</p>
-                        <p class="p-4 text-sm">Health & Beauty</p>
+                <section v-if="service.length > 0">
+                    <div class="flex">
+                        <div class="w-1/4 border border-[#19140035]">
+                            <p v-for="value in service" :key="value.id" class="p-4 text-sm" @click="getImage(value.image)">
+                                {{ value.name }}
+                            </p>
+                        </div>
+                        <div class="w-3/4 p-4" v-if="selectedImage || service[0].image">
+                            <v-img cover :src="selectedImage || service[0].image" class="object-cover" />
+                        </div>
                     </div>
-                    <div class="w-3/4 p-4">
-                        <v-img cover :src="props.bannerUrl" class="object-cover" />
+                </section>
+                <section v-else>
+                    <div class="flex">
+                        <div class="w-1/4 border border-[#19140035]">
+                            <p class="p-4 text-sm">Woman's Fashion</p>
+                            <p class="p-4 text-sm">Men's Fashion</p>
+                            <p class="p-4 text-sm">Electronics</p>
+                            <p class="p-4 text-sm">Home & Lifestyle</p>
+                            <p class="p-4 text-sm">Medicine</p>
+                            <p class="p-4 text-sm">Sports & Outdoor</p>
+                            <p class="p-4 text-sm">Baby's & Toys</p>
+                            <p class="p-4 text-sm">Groceries & Pets</p>
+                            <p class="p-4 text-sm">Health & Beauty</p>
+                        </div>
+                        <div class="w-3/4 p-4">
+                            <v-img cover :src="props.bannerUrl" class="object-cover" />
+                        </div>
                     </div>
                 </section>
             </v-container>

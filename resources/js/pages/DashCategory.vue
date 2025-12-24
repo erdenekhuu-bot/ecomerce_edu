@@ -2,21 +2,15 @@
 import AppLayout from '@/layouts/AppLayout.vue';
 import { categorycreate, dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head, Link, router } from '@inertiajs/vue3';
-import { ref } from 'vue';
+import { Head, Link } from '@inertiajs/vue3';
 
-type Category = {
-    data: Array<{
-        id: number;
-        image: string;
-        name: string;
-        description: string;
-        meta: string;
-    }>;
-    last_page: number;
-    current_page: number;
-    total: number;
-};
+type Category = Array<{
+    id: number;
+    image: string;
+    name: string;
+    description: string;
+    meta: string;
+}>;
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -25,23 +19,9 @@ const breadcrumbs: BreadcrumbItem[] = [
     },
 ];
 
-const changePage = (page: number) => {
-    router.get(
-        '/category',
-        { page },
-        {
-            preserveState: true,
-            preserveScroll: true,
-        },
-    );
-};
-
 const props = defineProps<{
     record: Category;
 }>();
-
-const page = ref(props.record.current_page);
-const totalPages = ref(props.record.total);
 </script>
 
 <template>
@@ -63,11 +43,8 @@ const totalPages = ref(props.record.total);
                         { title: 'description', key: 'description' },
                         { title: 'meta attribute', key: 'meta' },
                     ]"
-                    :items="props.record.data"
-                    :items-length="props.record.total"
-                    :page="props.record.current_page"
-                    :items-per-page="5"
-                    @update:page="changePage"
+                    :items="props.record"
+                    :items-length="props.record.length"
                 >
                     <template #item.image="{ item }">
                         <img v-if="item.image" :src="'/' + item.image" alt="" class="h-16 w-16 rounded object-cover" />
