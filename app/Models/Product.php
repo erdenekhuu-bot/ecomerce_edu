@@ -17,7 +17,6 @@ class Product extends Model
     ];
     protected $primaryKey = 'id';
     protected $timestamps = true;
-
     public function getCategory(): BelongsTo {
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }

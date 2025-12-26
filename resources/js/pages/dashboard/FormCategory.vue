@@ -21,7 +21,11 @@ const breadcrumbs: BreadcrumbItem[] = [
     <AppLayout :breadcrumbs="breadcrumbs">
         <div class="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
             <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <Form v-bind="CategoryController.store.form()" v-slot="{ errors, processing }" :reset-on-success="['name', 'description']">
+                <Form
+                    v-bind="CategoryController.store.form()"
+                    v-slot="{ errors, processing }"
+                    :reset-on-success="['name', 'image', 'meta', 'description']"
+                >
                     <v-text-field name="name" label="Category name" />
                     <InputError :message="errors.name" />
                     <v-file-input style="width: 20%" label="Category icon" name="image" counter multiple show-size />

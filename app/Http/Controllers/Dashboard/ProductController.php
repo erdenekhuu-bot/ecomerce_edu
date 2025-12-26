@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
+use App\Http\Requests\ProductRequest;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 class ProductController extends Controller
 {
     /**
@@ -21,15 +24,34 @@ class ProductController extends Controller
      */
     public function create(): Response
     {
-        return Inertia::render('dashboard/FormProduct');
+        $category=DB::table('categories')->select('id','name','description')->get();
+        return Inertia::render('dashboard/FormProduct',[
+            'categories'=>$category
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): void
+    public function store(ProductRequest $request): RedirectResponse
     {
-        //
+       $rule=$request->validated();
+       if ($request->hasFile('slug')) {
+            $image = $request->file('slug');
+            $imageName = time() . '_' . $image->getClientOriginalName();
+            $image->move(public_path('images'), $imageName);
+            $imagePath = 'images/'.$imageName;
+        }
+        DB::table('products')->insert([
+                'name' => $rule['name'],
+                'slug' => $imagePath,
+                'description' => $rule['description'],
+                'category_id' => $rule['category_id'],
+                'price' => $rule['price'],
+                'created_at' => now(),
+                'updated_at' => now(),
+        ]);
+        return redirect()->route('product');
     }
 
     /**
