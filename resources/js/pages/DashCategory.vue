@@ -46,10 +46,6 @@ const props = defineProps<{
                     :items="props.record"
                     :items-length="props.record.length"
                 >
-                    <!-- <template #item.image="{ item }">
-                        <img v-if="item.image" :src="'/' + item.image" alt="" class="h-16 w-16 rounded object-cover" />
-                        <span v-else class="text-gray-400">No Image</span>
-                    </template> -->
                     <template v-slot:[`item.image`]="{ item }">
                         <img v-if="item.image" :src="'/' + item.image" alt="" class="h-16 w-16 rounded object-cover" />
                         <span v-else class="text-gray-400">No Image</span>

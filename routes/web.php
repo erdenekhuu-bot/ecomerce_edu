@@ -19,9 +19,13 @@ Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
         'create' => 'categorycreate',
         'store' => 'categorystore',
         ]);
+
     Route::resource('/product', ProductController::class)->names([
-        'index'=> 'product',
-    ]);
+        'index' => 'product',
+        'create' => 'productcreate',
+        'store' => 'productstore',
+        ]);
+    
     Route::resource('/user', UserController::class)->names([
         'index' => 'user',
         'create' => 'user.create'

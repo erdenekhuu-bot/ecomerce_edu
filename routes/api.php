@@ -2,7 +2,6 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Models\RequestAll;
 use Illuminate\Support\Facades\DB;
 
 Route::get('/user', function (Request $request) {
