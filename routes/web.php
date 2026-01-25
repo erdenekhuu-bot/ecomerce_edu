@@ -6,10 +6,13 @@ use Inertia\Inertia;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\Welcome;
 
-Route::get('/', [Welcome::class,'index'])->name('home');
-
-
+Route::prefix('/')->group(function () {
+    Route::get('', [Welcome::class,'index'])->name('home');
+    Route::get('/contact', [Welcome::class,'contact'])->name('contact');    
+    Route::get('/about', [Welcome::class,'about'])->name('about');
+});
 Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
     Route::get('/', function () {
         return Inertia::render('Dashboard');

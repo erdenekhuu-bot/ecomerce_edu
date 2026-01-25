@@ -35,3 +35,17 @@ export interface User {
 }
 
 export type BreadcrumbItemType = BreadcrumbItem;
+
+export type Category = Array<{
+        id: number;
+        image: string;
+        name: string;
+        description: string;
+    }>;
+
+export type Service = Array<{
+        id: number;
+        image: string;
+        name: string;
+        description: string;
+    }>; 

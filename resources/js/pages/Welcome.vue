@@ -2,27 +2,20 @@
 import Nav from '@/components/navigation/Nav.vue';
 import { Head } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import { Category,Service } from '@/types';
 
 const props = defineProps<{
     bannerUrl: string;
-    category: Array<{
-        id: number;
-        image: string;
-        name: string;
-        description: string;
-    }>;
-    service: Array<{
-        id: number;
-        image: string;
-        name: string;
-        description: string;
-    }>;
+    category: Category;
+    service: Service;
+    musicbanner:string;
 }>();
 
 const selectedImage = ref<string | null>(null);
 const getImage = (imageUrl: string) => {
     selectedImage.value = imageUrl;
 };
+
 </script>
 
 <template>
@@ -30,8 +23,9 @@ const getImage = (imageUrl: string) => {
         <link rel="preconnect" href="https://rsms.me/" />
         <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
     </Head>
+    <Nav title="Exclusive" />
     <section class="">
-        <Nav title="Exclusive" />
+        
         <main class="w-full bg-white text-black">
             <v-container>
                 <section v-if="service.length > 0">
@@ -52,22 +46,7 @@ const getImage = (imageUrl: string) => {
                     </div>
                 </section>
                 <section v-else>
-                    <div class="flex">
-                        <div class="w-1/4 border border-[#19140035]">
-                            <p class="p-4 text-sm">Woman's Fashion</p>
-                            <p class="p-4 text-sm">Men's Fashion</p>
-                            <p class="p-4 text-sm">Electronics</p>
-                            <p class="p-4 text-sm">Home & Lifestyle</p>
-                            <p class="p-4 text-sm">Medicine</p>
-                            <p class="p-4 text-sm">Sports & Outdoor</p>
-                            <p class="p-4 text-sm">Baby's & Toys</p>
-                            <p class="p-4 text-sm">Groceries & Pets</p>
-                            <p class="p-4 text-sm">Health & Beauty</p>
-                        </div>
-                        <div class="w-3/4 p-4">
-                            <v-img cover :src="props.bannerUrl" class="object-cover" />
-                        </div>
-                    </div>
+                   <template>Nothing to show service</template>
                 </section>
             </v-container>
             <v-container>
@@ -84,8 +63,21 @@ const getImage = (imageUrl: string) => {
                         </div>
                     </div>
                 </section>
-                <section v-else>Nothing to show</section>
+                <section v-else> 
+                    <template>Nothing to show service</template>
+                </section>
+            </v-container>
+            <v-container>
+                 <v-img cover :src="musicbanner" class="object-cover" />
+            </v-container>
+            <v-container>
+                <section>
+                   Nothing to show product
+                </section>
             </v-container>
         </main>
     </section>
+    <footer>
+        123
+    </footer>
 </template>

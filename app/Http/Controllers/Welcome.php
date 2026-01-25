@@ -9,12 +9,19 @@ use Illuminate\Support\Facades\DB;
 class Welcome extends Controller
 {
     public function index():Response {
-        $category=DB::table("categories")->where('meta','=','product')->get();
+        $category=DB::table("categories")->where('meta','=','products')->get();
         $service=DB::table("categories")->where('meta','=','services')->get();
         return Inertia::render('Welcome',[
             'bannerUrl' => asset('home.png'),
             'category' => $category,
-            'service' => $service
+            'service' => $service,
+            'musicbanner'=> asset('musicbanner.png'),
         ]);
+    }
+    public function contact():Response {
+        return Inertia::render('Contact');
+    }
+    public function about():Response {
+        return Inertia::render('About');
     }
 }

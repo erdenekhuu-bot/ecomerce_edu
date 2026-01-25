@@ -11,9 +11,9 @@ defineProps<{
         <nav class="flex items-center justify-between gap-4">
             <b>{{ title }}</b>
             <div class="flex items-center gap-10">
-                <Link class="hover:underline">Home</Link>
-                <Link class="hover:underline">Contact</Link>
-                <Link class="hover:underline">About</Link>
+                <Link class="hover:underline" href="/">Home</Link>
+                <Link class="hover:underline" href="/contact">Contact</Link>
+                <Link class="hover:underline" href="/about">About</Link>
                 <div class="relative">
                     <input
                         placeholder="What are you looking for?"
@@ -68,7 +68,7 @@ defineProps<{
                         />
                     </svg>
                 </Link>
-            </div>
+           
             <Link
                 v-if="$page.props.auth.user"
                 :href="dashboard()"
@@ -80,6 +80,7 @@ defineProps<{
                 <Link :href="login()" class="text-sm leading-normal text-[#1b1b18] hover:underline"> Log in </Link>
                 <Link :href="register()" class="text-sm leading-normal text-[#1b1b18] hover:underline"> Register </Link>
             </div>
+             </div>
         </nav>
     </header>
 </template>
