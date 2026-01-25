@@ -1,16 +1,11 @@
 <script setup lang="ts">
-import Nav from '@/components/navigation/Nav.vue';
-import { Head, Link } from '@inertiajs/vue3';
+import Welcome from '@/pages/Welcome.vue';
 
 </script>
 
 <template>
-    <Head title="Contact Us">
-        <link rel="preconnect" href="https://rsms.me/" />
-        <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
-    </Head>
-    <Nav title="Contact Us" />
-    <section class="w-full h-[300px] bg-cover bg-center flex items-center justify-center" :style="`background-image: url(${bannerUrl})`">
+    <Welcome>
+        <section class="w-full h-[300px] bg-cover bg-center flex items-center justify-center" :style="`background-image: url(${bannerUrl})`">
         <h1 class="text-4xl font-bold text-white">Get in Touch</h1>
     </section>
         <section class="p-8">
@@ -21,4 +16,5 @@ import { Head, Link } from '@inertiajs/vue3';
             <p class="mb-2">Address: 123 Main Street, City, Country</p>
         </div>
     </section>
+    </Welcome>
 </template>
