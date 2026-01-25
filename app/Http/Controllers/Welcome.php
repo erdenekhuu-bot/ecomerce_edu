@@ -24,4 +24,10 @@ class Welcome extends Controller
     public function about():Response {
         return Inertia::render('About');
     }
+    public function product($id):Response {
+        $record=DB::table("products")->where('id','=',$id)->first();
+        return Inertia::render('ProductDetail',[
+            'product'=>$record
+        ]);
+    }
 }

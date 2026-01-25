@@ -24,6 +24,7 @@ class ProductRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'slug' => 'required',
+            'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg',
             'description' => 'nullable|string',
             'category_id' => 'required|exists:categories,id',
             'price' => 'required|numeric|min:0',
@@ -33,14 +34,11 @@ class ProductRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => 'Product name is required.',
-            'slug.required' => 'Product slug is required.',
-            'slug.unique' => 'Product slug must be unique.',
-            'category_id.required' => 'Category is required.',
-            'category_id.exists' => 'Selected category does not exist.',
-            'price.required' => 'Price is required.',
-            'price.numeric' => 'Price must be a number.',
-            'price.min' => 'Price must be at least 0.',
+           'name.required' => 'The product name is required.',
+           'slug.required' => 'The product slug is required.',
+           'image.required' => 'The product image is required.',
+           'category_id.required' => 'The category is required.',
+           'price.required' => 'The price is required.',
         ];
     }
 }

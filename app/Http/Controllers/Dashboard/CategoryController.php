@@ -40,8 +40,6 @@ class CategoryController extends Controller
        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            // $image->storeAs('images', $imageName, 'public');
-            // $imagePath = 'storage/images/'.$imageName;
             $image->move(public_path('images'), $imageName);
             $imagePath = 'images/'.$imageName;
         }

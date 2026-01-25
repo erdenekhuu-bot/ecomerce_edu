@@ -25,12 +25,22 @@ const props = defineProps<{
                 <Form
                     v-bind="ProductController.store.form()"
                     v-slot="{ errors, processing }"
+                    :force-form-data="true"
                     :reset-on-success="['name', 'slug', 'category_id', 'description', 'price']"
                 >
+
                     <v-text-field name="name" label="Product name" style="width: 30%" />
                     <InputError :message="errors.name" />
-                    <v-file-input name="slug" label="Product image" style="width: 20%" counter multiple show-size />
+                    <v-text-field name="slug" label="Product slug" style="width: 30%" />
                     <InputError :message="errors.slug" />
+                     <v-file-input
+                        name="image"
+                        label="Product image"
+                        style="width: 20%"
+                        show-size
+                    />
+
+                    <InputError :message="errors.image" />
                     <v-textarea name="description" label="Product description" style="width: 50%" />
                     <InputError :message="errors.description" />
                     <v-select name="category_id" label="Category" :items="props.categories" item-title="name" item-value="id" style="width: 30%" />

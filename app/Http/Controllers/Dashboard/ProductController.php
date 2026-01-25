@@ -35,16 +35,17 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request): RedirectResponse
     {
-       $rule=$request->validated();
-       if ($request->hasFile('slug')) {
-            $image = $request->file('slug');
+        $rule=$request->validated();
+        if($request->hasFile('image')) {
+            $image=$request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $image->move(public_path('images'), $imageName);
-            $imagePath = 'images/'.$imageName;
+            $imagePath = $request->file('image')->store('images', 'public'); 
+           
         }
         DB::table('products')->insert([
                 'name' => $rule['name'],
-                'slug' => $imagePath,
+                'slug' => $rule['slug'],
+                'image'=>$imagePath,
                 'description' => $rule['description'],
                 'category_id' => $rule['category_id'],
                 'price' => $rule['price'],
