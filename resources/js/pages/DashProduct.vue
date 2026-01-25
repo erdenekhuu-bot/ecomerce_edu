@@ -12,6 +12,19 @@ const breadcrumbs: BreadcrumbItem[] = [
         href: dashboard().url,
     },
 ];
+
+type Product = Array<{
+    id: number;
+    name: string;
+    slug: string;
+    image: string;
+    description: string;
+    price: number;
+}>;
+
+const props = defineProps<{
+    products: Product;
+}>();
 </script>
 
 <template>
@@ -22,7 +35,24 @@ const breadcrumbs: BreadcrumbItem[] = [
                 <Link :href="ProductController.create()"> Create product </Link>
             </div>
             <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <PlaceholderPattern />
+                <v-data-table-server
+                    density="compact"
+                    item-key="id"
+                    :headers="[
+                        { title: 'id', key: 'id' },
+                        { title: 'image', key: 'image' },
+                        { title: 'name', key: 'name' },
+                        { title: 'description', key: 'description' },
+                        { title: 'slug', key: 'slug' },
+                    ]"
+                    :items="props.products"
+                    :items-length="props.products.length"
+                >
+                    <template v-slot:[`item.image`]="{ item }">
+                        <img v-if="item.image" :src="'/' + item.image" alt="" class="h-16 w-16 rounded object-cover" />
+                        <span v-else class="text-gray-400">No Image</span>
+                    </template>
+                </v-data-table-server>
             </div>
         </div>
     </AppLayout>

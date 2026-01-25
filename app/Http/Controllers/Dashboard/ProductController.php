@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
-        $product=DB::table('products')->get();
+        $product=DB::table('products')->select('id','name','slug','image','description','price')->get();
         return Inertia::render('DashProduct', [
             'products' => $product
         ]);
@@ -40,9 +40,10 @@ class ProductController extends Controller
     {
         $rule=$request->validated();
         if($request->hasFile('image')) {
-            $image=$request->file('image');
+             $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
-            $imagePath = $request->file('image')->store('images', 'public'); 
+            $image->move(public_path('images'), $imageName);
+            $imagePath = 'images/'.$imageName;
            
         }
         DB::table('products')->insert([
