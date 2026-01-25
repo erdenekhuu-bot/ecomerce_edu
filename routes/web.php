@@ -9,10 +9,10 @@ use App\Http\Controllers\Dashboard\ProductController;
 use App\Http\Controllers\Welcome;
 
 Route::prefix('/')->group(function () {
-    Route::get('', [Welcome::class,'index'])->name('home');
-    Route::get('/contact', [Welcome::class,'contact'])->name('contact');    
-    Route::get('/about', [Welcome::class,'about'])->name('about');
-    Route::get('/detail/{id}', [Welcome::class,'product'])->name('detail');
+    Route::head('', [Welcome::class,'index'])->name('home');
+    Route::head('/contact', [Welcome::class,'contact'])->name('contact');    
+    Route::head('/about', [Welcome::class,'about'])->name('about');
+    Route::head('/detail/{id}', [Welcome::class,'product'])->name('detail');
 });
 Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
     Route::get('/', function () {
