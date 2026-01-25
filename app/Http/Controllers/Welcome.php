@@ -11,7 +11,7 @@ class Welcome extends Controller
     public function index():Response {
         $category=DB::table("categories")->where('meta','=','products')->get();
         $service=DB::table("categories")->where('meta','=','services')->get();
-        return Inertia::render('Welcome',[
+        return Inertia::render('Home',[
             'bannerUrl' => asset('home.png'),
             'category' => $category,
             'service' => $service,
