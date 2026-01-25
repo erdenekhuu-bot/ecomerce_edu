@@ -16,7 +16,10 @@ class ProductController extends Controller
      */
     public function index(): Response
     {
-        return Inertia::render('DashProduct');
+        $product=DB::table('products')->get();
+        return Inertia::render('DashProduct', [
+            'products' => $product
+        ]);
     }
 
     /**
