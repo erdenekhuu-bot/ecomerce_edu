@@ -52,12 +52,12 @@ const getImage = (imageUrl: string) => {
             <v-container>
                 <section v-if="props.category.length > 0" class="">
                     <p class="text-2xl font-bold">Browse By Category</p>
-                    <div class="flex">
+                    <div class="flex justify-between">
                         <div v-for="item in props.category" :key="item.id" class="m-4 h-[145px] w-[170px] rounded-lg border p-4">
                             <div class="text-center">
                                 <span class="font-bold">{{ item.name }}</span>
-                                <div class="flex w-[250px] justify-center">
-                                    <img v-if="item.image" :src="'/' + item.image" alt="" />
+                                <div class="flex justify-center">
+                                    <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
                                 </div>
                             </div>
                         </div>
@@ -67,16 +67,15 @@ const getImage = (imageUrl: string) => {
                     <template>Nothing to show service</template>
                 </section>
             </v-container>
-
             <v-container>
                 <section v-if="props.products.length > 0">
-                    <div class="flex">
+                    <div class="flex justify-between">
                         <div v-for="item in props.products" :key="item.id">
-                            <div class="w-[230px] rounded-xl p-2">
+                            <div class="m-4 w-[230px] rounded-xl">
                                 <div class="flex justify-center">
                                     <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
                                 </div>
-                                <span class="my-2 block text-sm font-bold">{{ item.name }}</span>
+                                <p class="font-bold">{{ item.name }}</p>
                                 <p class="font-bold text-red-500">${{ Number(item.price) }}</p>
                             </div>
                         </div>
