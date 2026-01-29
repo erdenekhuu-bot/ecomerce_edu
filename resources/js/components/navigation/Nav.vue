@@ -35,7 +35,7 @@ watch(name, (newValue) => {
 </script>
 
 <template>
-    <header class="sticky top-0 z-50 bg-white p-4 text-[#1b1b18] shadow-sm">
+    <header class="sticky top-0 z-50 bg-white p-4 px-16 text-[#1b1b18] shadow-sm">
         <nav class="flex items-center justify-between gap-4">
             <b>{{ title }}</b>
             <div class="flex items-center gap-10">

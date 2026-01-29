@@ -37,4 +37,7 @@ class Welcome extends Controller
             'product'=>$record
         ]);
     }
+    public function categorylist($id): Response{
+        return Inertia::render('');
+    }
 }
