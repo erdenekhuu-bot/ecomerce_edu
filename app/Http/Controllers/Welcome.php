@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Inertia\Response;
 use Illuminate\Support\Facades\DB;
+use function Laravel\Prompts\select;
 
 class Welcome extends Controller
 {
@@ -27,7 +28,11 @@ class Welcome extends Controller
         return Inertia::render('About');
     }
     public function product($id):Response {
-        $record=DB::table("products")->where('id','=',(int)$id)->first();
+        $record=DB::table('products')
+            ->leftJoin('categories','products.category_id', '=', 'categories.id')
+            ->select('products.*', 'categories.name as category_name')
+            ->where('products.id', (int)$id)
+            ->first();
         return Inertia::render('ProductDetail',[
             'product'=>$record
         ]);
