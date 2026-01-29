@@ -1,24 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import { Category,Service } from '@/types';
 import Welcome from '@/pages/Welcome.vue';
+import { Category, Service } from '@/types';
+import { ref } from 'vue';
 
 const props = defineProps<{
     bannerUrl: string;
     category: Category;
     service: Service;
-    musicbanner:string;
+    musicbanner: string;
+    products: Array<{
+        id: number;
+        name: string;
+        slug: string;
+        description: string;
+        price: string;
+        image: string;
+    }>;
 }>();
 
 const selectedImage = ref<string | null>(null);
 const getImage = (imageUrl: string) => {
     selectedImage.value = imageUrl;
 };
-
 </script>
 <template>
-   <Welcome>
-      <main class="w-full bg-white text-black">
+    <Welcome>
+        <main class="w-full bg-white text-black">
             <v-container>
                 <section v-if="service.length > 0">
                     <div class="flex">
@@ -38,9 +45,10 @@ const getImage = (imageUrl: string) => {
                     </div>
                 </section>
                 <section v-else>
-                   <template>Nothing to show service</template>
+                    <template>Nothing to show service</template>
                 </section>
             </v-container>
+
             <v-container>
                 <section v-if="props.category.length > 0" class="">
                     <p class="text-2xl font-bold">Browse By Category</p>
@@ -48,25 +56,42 @@ const getImage = (imageUrl: string) => {
                         <div v-for="item in props.category" :key="item.id" class="m-4 h-[145px] w-[170px] rounded-lg border p-4">
                             <div class="text-center">
                                 <span class="font-bold">{{ item.name }}</span>
-                                <div class="flex justify-center">
-                                    <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
+                                <div class="flex w-[250px] justify-center">
+                                    <img v-if="item.image" :src="'/' + item.image" alt="" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
-                <section v-else> 
+                <section v-else>
+                    <template>Nothing to show service</template>
+                </section>
+            </v-container>
+
+            <v-container>
+                <section v-if="props.products.length > 0">
+                    <div class="flex">
+                        <div v-for="item in props.products" :key="item.id">
+                            <div class="w-[230px] rounded-xl p-2">
+                                <div class="flex justify-center">
+                                    <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
+                                </div>
+                                <span class="my-2 block text-sm font-bold">{{ item.name }}</span>
+                                <p class="font-bold text-red-500">${{ Number(item.price) }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section v-else>
                     <template>Nothing to show service</template>
                 </section>
             </v-container>
             <v-container>
-                 <v-img cover :src="musicbanner" class="object-cover" />
+                <v-img cover :src="musicbanner" class="object-cover" />
             </v-container>
             <v-container>
-                <section>
-                   Nothing to show product
-                </section>
+                <section>Nothing to show product</section>
             </v-container>
         </main>
-   </Welcome>
+    </Welcome>
 </template>

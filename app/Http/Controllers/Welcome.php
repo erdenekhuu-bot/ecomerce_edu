@@ -11,11 +11,13 @@ class Welcome extends Controller
     public function index():Response {
         $category=DB::table("categories")->where('meta','=','products')->get();
         $service=DB::table("categories")->where('meta','=','services')->get();
+        $products=DB::table('products')->limit(5)->get();
         return Inertia::render('Home',[
             'bannerUrl' => asset('home.png'),
             'category' => $category,
             'service' => $service,
             'musicbanner'=> asset('musicbanner.png'),
+            'products'=>$products
         ]);
     }
     public function contact():Response {
