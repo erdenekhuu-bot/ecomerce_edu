@@ -9,15 +9,18 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::post('/filter', function (Request $request) {
-    if(empty($request->name)){
-        $records = DB::table('products')->paginate(5); 
+    if (empty($request->name)) {
+        $records = DB::table('products')->paginate(5);
+    } else {
+        $records = DB::table('products')
+            ->where(DB::raw('LOWER(name)'), 'LIKE', '%' . strtolower($request->name) . '%') // Use LOWER for case-insensitive search
+            ->select('id', 'name')
+            ->paginate(5);
     }
-    $records = DB::table('products')
-        ->where('name', 'LIKE', '%' . $request->name . '%')
-        ->select('id','name')
-        ->paginate(5); 
+    
     return response()->json($records);
 });
+
 
 Route::get('/checkout', function(Request $request):void{
     DB::table('request_alls')->updateOrInsert(

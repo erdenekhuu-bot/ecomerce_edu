@@ -15,7 +15,7 @@ const fetchProducts = async () => {
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ name: name.value }),
+        body: JSON.stringify({ name: name.value.toLowerCase() }),
     });
 
     if (response.ok) {
@@ -25,8 +25,12 @@ const fetchProducts = async () => {
         console.error('Error fetching products:', response.statusText);
     }
 };
-watch(name, () => {
-    fetchProducts();
+watch(name, (newValue) => {
+    if (newValue.trim() !== '') {
+        fetchProducts();
+    } else {
+        products.value = { data: [], links: [] };
+    }
 });
 </script>
 
@@ -42,11 +46,10 @@ watch(name, () => {
                     <input
                         placeholder="What are you looking for?"
                         v-model="name"
-                        v-on:change=""
                         class="inline-block w-64 rounded-sm border border-[#19140035] py-1.5 pr-10 pl-5 text-sm leading-normal hover:border-[#1915014a]"
                     />
-                    <ul>
-                        <li v-for="product in products.data" :key="product?.id">
+                    <ul class="absolute z-10 w-64 bg-white">
+                        <li v-for="product in products.data" :key="product?.id" class="py-1 hover:cursor-pointer hover:bg-gray-100">
                             <Link :href="`/detail/${product?.id}`">{{ product?.name }}</Link>
                         </li>
                     </ul>
