@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Welcome from '@/pages/Welcome.vue';
 import { Category, Service } from '@/types';
+import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
 const props = defineProps<{
@@ -71,13 +72,15 @@ const getImage = (imageUrl: string) => {
                 <section v-if="props.products.length > 0">
                     <div class="flex justify-between">
                         <div v-for="item in props.products" :key="item.id">
-                            <div class="m-4 w-[230px] rounded-xl">
-                                <div class="flex justify-center">
-                                    <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
+                            <Link :href="`/detail/${item.id}`">
+                                <div class="m-4 w-[230px] rounded-xl">
+                                    <div class="flex justify-center">
+                                        <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
+                                    </div>
+                                    <p class="font-bold">{{ item.name }}</p>
+                                    <p class="font-bold text-red-500">${{ Number(item.price) }}</p>
                                 </div>
-                                <p class="font-bold">{{ item.name }}</p>
-                                <p class="font-bold text-red-500">${{ Number(item.price) }}</p>
-                            </div>
+                            </Link>
                         </div>
                     </div>
                 </section>
