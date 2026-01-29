@@ -1,9 +1,33 @@
 <script setup lang="ts">
 import { dashboard, login, register } from '@/routes';
 import { Link } from '@inertiajs/vue3';
+import { ref, watch } from 'vue';
+
 defineProps<{
     title: string;
 }>();
+const name = ref('');
+const products = ref({ data: [], links: [] });
+
+const fetchProducts = async () => {
+    const response = await fetch('/api/filter', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: name.value }),
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        products.value = data;
+    } else {
+        console.error('Error fetching products:', response.statusText);
+    }
+};
+watch(name, () => {
+    fetchProducts();
+});
 </script>
 
 <template>
@@ -17,8 +41,16 @@ defineProps<{
                 <div class="relative">
                     <input
                         placeholder="What are you looking for?"
+                        v-model="name"
+                        v-on:change=""
                         class="inline-block w-64 rounded-sm border border-[#19140035] py-1.5 pr-10 pl-5 text-sm leading-normal hover:border-[#1915014a]"
                     />
+                    <ul>
+                        <li v-for="product in products.data" :key="product?.id">
+                            <Link :href="`/detail/${product?.id}`">{{ product?.name }}</Link>
+                        </li>
+                    </ul>
+
                     <Link class="absolute top-1/2 right-2 -translate-y-1/2 transform text-gray-400 hover:text-gray-600">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
@@ -68,19 +100,19 @@ defineProps<{
                         />
                     </svg>
                 </Link>
-           
-            <Link
-                v-if="$page.props.auth.user"
-                :href="dashboard()"
-                class="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a]"
-            >
-                Dashboard
-            </Link>
-            <div class="flex gap-6" v-else>
-                <Link :href="login()" class="text-sm leading-normal text-[#1b1b18] hover:underline"> Log in </Link>
-                <Link :href="register()" class="text-sm leading-normal text-[#1b1b18] hover:underline"> Register </Link>
+
+                <Link
+                    v-if="$page.props.auth.user"
+                    :href="dashboard()"
+                    class="inline-block rounded-sm border border-[#19140035] px-5 py-1.5 text-sm leading-normal text-[#1b1b18] hover:border-[#1915014a]"
+                >
+                    Dashboard
+                </Link>
+                <div class="flex gap-6" v-else>
+                    <Link :href="login()" class="text-sm leading-normal text-[#1b1b18] hover:underline"> Log in </Link>
+                    <Link :href="register()" class="text-sm leading-normal text-[#1b1b18] hover:underline"> Register </Link>
+                </div>
             </div>
-             </div>
         </nav>
     </header>
 </template>

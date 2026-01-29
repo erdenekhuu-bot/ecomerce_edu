@@ -14,6 +14,7 @@ Route::post('/filter', function (Request $request) {
     }
     $records = DB::table('products')
         ->where('name', 'LIKE', '%' . $request->name . '%')
+        ->select('id','name')
         ->paginate(5); 
     return response()->json($records);
 });
