@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Welcome from '@/pages/Welcome.vue';
 import { Category, Service } from '@/types';
 import { Link } from '@inertiajs/vue3';
 import { ref } from 'vue';
+import Welcome from '../Welcome.vue';
 
 const props = defineProps<{
     bannerUrl: string;

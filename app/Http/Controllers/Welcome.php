@@ -13,7 +13,7 @@ class Welcome extends Controller
         $category=DB::table("categories")->where('meta','=','products')->get();
         $service=DB::table("categories")->where('meta','=','services')->get();
         $products=DB::table('products')->limit(5)->get();
-        return Inertia::render('Home',[
+        return Inertia::render('home/Home',[
             'bannerUrl' => asset('home.png'),
             'category' => $category,
             'service' => $service,
@@ -22,10 +22,10 @@ class Welcome extends Controller
         ]);
     }
     public function contact():Response {
-        return Inertia::render('Contact');
+        return Inertia::render('home/Contact');
     }
     public function about():Response {
-        return Inertia::render('About');
+        return Inertia::render('home/About');
     }
     public function product($id):Response {
         $record=DB::table('products')
@@ -33,7 +33,7 @@ class Welcome extends Controller
             ->select('products.*', 'categories.name as category_name')
             ->where('products.id', (int)$id)
             ->first();
-        return Inertia::render('ProductDetail',[
+        return Inertia::render('home/ProductDetail',[
             'product'=>$record
         ]);
     }
