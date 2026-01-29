@@ -13,7 +13,7 @@ Route::prefix('/')->group(function () {
     Route::get('/contact', [Welcome::class,'contact'])->name('contact');    
     Route::get('/about', [Welcome::class,'about'])->name('about');
     Route::get('/detail/{id}', [Welcome::class,'product'])->name('detail');
-    Route::get('/category/list',[Welcome::class,'categorylist'])->name('categorylist');
+    Route::get('/category/list/{id}',[Welcome::class,'categorylist'])->name('categorylist');
 });
 Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
     Route::get('/', function () {

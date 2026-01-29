@@ -46,9 +46,9 @@ watch(name, (newValue) => {
                     <input
                         placeholder="What are you looking for?"
                         v-model="name"
-                        class="inline-block w-64 rounded-sm border border-[#19140035] py-1.5 pr-10 pl-5 text-sm leading-normal hover:border-[#1915014a]"
+                        class="inline-block w-96 rounded-sm border border-[#19140035] py-1.5 pr-10 pl-5 text-sm leading-normal hover:border-[#1915014a]"
                     />
-                    <ul class="absolute z-10 w-64 bg-white">
+                    <ul class="absolute z-10 w-96 bg-white">
                         <li v-for="product in products.data" :key="product?.id" class="py-1 hover:cursor-pointer hover:bg-gray-100">
                             <Link :href="`/detail/${product?.id}`">{{ product?.name }}</Link>
                         </li>
