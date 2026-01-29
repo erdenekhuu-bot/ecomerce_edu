@@ -38,12 +38,13 @@ const props = defineProps<{
                 <v-data-table-server
                     density="compact"
                     item-key="id"
-                    :headers="[
+                    :columns="[
                         { title: 'id', key: 'id' },
                         { title: 'image', key: 'image' },
                         { title: 'name', key: 'name' },
                         { title: 'description', key: 'description' },
                         { title: 'slug', key: 'slug' },
+                        { title: 'Actions', key: 'actions'},
                     ]"
                     :items="props.products"
                     :items-length="props.products.length"
@@ -52,6 +53,26 @@ const props = defineProps<{
                         <img v-if="item.image" :src="'/' + item.image" alt="" class="h-16 w-16 rounded object-cover" />
                         <span v-else class="text-gray-400">No Image</span>
                     </template>
+                    <template v-slot:[`item.actions`]="{ item }">
+  <div class="flex gap-2">
+    <Link
+      :href="ProductController.edit(item.id)"
+      class="text-blue-600 hover:underline"
+    >
+      Edit
+    </Link>
+
+    <v-btn
+      size="small"
+      color="red"
+      variant="tonal"
+    >
+      Delete
+    </v-btn>
+  </div>
+</template>
+
+
                 </v-data-table-server>
             </div>
         </div>
