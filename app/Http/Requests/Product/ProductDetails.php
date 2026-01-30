@@ -39,7 +39,7 @@ class ProductDetails extends FormRequest
             'rate'=>['numeric']
         ];
     }
-    public function messages()
+    public function messages(): array
     {
         return [];
     }

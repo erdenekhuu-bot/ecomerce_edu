@@ -56,7 +56,7 @@ const props = defineProps<{
                         <div class="flex items-center gap-4">
                             <Link :href="ProductController.edit(item.id)" class="text-blue-600 hover:underline">Edit</Link>
                             <Link :href="ProductController.show(item.id)" class="text-green-600 hover:underline">Images</Link>
-                            <Link href="#" class="text-red-600 hover:underline">Delete</Link>
+                            <Link :href="ProductController.destroy(item.id)" class="text-red-600 hover:underline">Delete</Link>
                         </div>
                     </template>
                 </v-data-table-server>

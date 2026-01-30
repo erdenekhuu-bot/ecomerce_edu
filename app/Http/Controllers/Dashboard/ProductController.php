@@ -6,10 +6,11 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\ProductRequest;
 use App\Http\Requests\Product\ProductDetails;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     /**
@@ -41,7 +42,7 @@ class ProductController extends Controller
     {
         $rule=$request->validated();
         if($request->hasFile('image')) {
-             $image = $request->file('image');
+            $image = $request->file('image');
             $imageName = time() . '_' . $image->getClientOriginalName();
             $image->move(public_path('images'), $imageName);
             $imagePath = 'images/'.$imageName;
@@ -89,7 +90,29 @@ class ProductController extends Controller
      */
     public function update(ProductDetails $request, string $id): RedirectResponse
     {
-        return redirect()->route('productedit');
+        $rule = $request->validated();
+        if ($request->hasFile('image')) {
+            $old = DB::table('products')->where('id', (int)$id)->value('image');
+            if ($old) {
+                Storage::disk('public')->delete($old);
+            }
+            $rule['image'] = $request->file('image')->store('products', 'public'); 
+        } else {
+            unset($rule['image']);
+        }
+
+        DB::table('products')
+            ->where('id', (int) $id)
+            ->update([
+                'name'        => $rule['name'],
+                'stock'        => $rule['stock'],
+                'image'       => $rule['image'],   
+                'description' => $rule['description'],
+                'category_id' => $rule['category_id'],
+                'price'       => $rule['price'],
+                'updated_at'  => now(),
+            ]);
+        return redirect()->route('productupdate');
     }
 
     /**
