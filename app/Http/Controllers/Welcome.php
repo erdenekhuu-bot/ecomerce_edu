@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Inertia\Response;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\RedirectResponse;
 
 class Welcome extends Controller
 {
@@ -39,5 +40,13 @@ class Welcome extends Controller
     public function categorylist($id): Response{
         $record=DB::table('products')->where('category_id','=',(int)$id)->get();
         return Inertia::render('home/CategoryProduct',['list'=>$record]);
+    }
+
+    public function appendPurchase($id): RedirectResponse{
+        return redirect()->route('categorylist');
+    }
+
+    public function appendFavorite($id):RedirectResponse {
+        return redirect()->route('categorylist');
     }
 }
