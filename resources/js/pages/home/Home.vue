@@ -56,10 +56,12 @@ const getImage = (imageUrl: string) => {
                     <div class="flex justify-between">
                         <div v-for="item in props.category" :key="item.id" class="m-4 h-[145px] w-[170px] rounded-lg border p-4">
                             <div class="text-center">
-                                <span class="font-bold">{{ item.name }}</span>
-                                <div class="flex justify-center">
-                                    <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
-                                </div>
+                                <Link :href="`/category/list/${item.id}`">
+                                    <span class="font-bold">{{ item.name }}</span>
+                                    <div class="flex justify-center">
+                                        <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
+                                    </div>
+                                </Link>
                             </div>
                         </div>
                     </div>

@@ -37,6 +37,7 @@ class Welcome extends Controller
         ]);
     }
     public function categorylist($id): Response{
-        return Inertia::render('');
+        $record=DB::table('products')->where('category_id','=',(int)$id)->get();
+        return Inertia::render('home/CategoryProduct',['list'=>$record]);
     }
 }
