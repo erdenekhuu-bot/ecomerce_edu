@@ -30,7 +30,8 @@ Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
         'create' => 'productcreate',
         'store' => 'productstore',
         'edit'=>'productedit',
-        'update'=>'productupdate'
+        'update'=>'productupdate',
+        'show'=>'productshow'
         ]);
     
     Route::resource('/user', UserController::class)->names([

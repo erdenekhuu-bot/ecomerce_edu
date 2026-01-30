@@ -62,15 +62,18 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id): Response
     {
-        //
+        $record=DB::table('products')->where('id','=',(int)$id)->select('id','image')->first();
+        return Inertia::render('dashboard/detail/ProductImage',[
+            'detail'=>$record
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): Response
     {
         $record=DB::table('products')->where('id','=',(int)$id)->first();
         $category=DB::table('categories')->select('id','name','description')->get();
@@ -83,16 +86,15 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, string $id): RedirectResponse
     {
-        return dump($request->all());
-        // return redirect()->route('productedit');
+        return redirect()->route('productedit');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id): void
     {
         //
     }

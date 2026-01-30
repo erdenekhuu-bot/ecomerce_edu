@@ -28,18 +28,11 @@ const props = defineProps<{
                     :force-form-data="true"
                     :reset-on-success="['name', 'slug', 'category_id', 'description', 'price']"
                 >
-
                     <v-text-field name="name" label="Product name" style="width: 30%" />
                     <InputError :message="errors.name" />
                     <v-text-field name="slug" label="Product slug" style="width: 30%" />
                     <InputError :message="errors.slug" />
-                     <v-file-input
-                        name="image"
-                        label="Product image"
-                        style="width: 20%"
-                        show-size
-                    />
-
+                    <v-file-input name="image" label="Product image" style="width: 20%" show-size />
                     <InputError :message="errors.image" />
                     <v-textarea name="description" label="Product description" style="width: 50%" />
                     <InputError :message="errors.description" />

@@ -53,8 +53,9 @@ const props = defineProps<{
                         <span v-else class="text-gray-400">No Image</span>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">
-                        <div class="flex items-center gap-2">
-                            <Link :href="ProductController.edit(item.id)" class="text-blue-600 hover:underline"> Edit </Link>
+                        <div class="flex items-center gap-4">
+                            <Link :href="ProductController.edit(item.id)" class="text-blue-600 hover:underline">Edit</Link>
+                            <Link :href="ProductController.show(item.id)" class="text-green-600 hover:underline">Images</Link>
                             <v-btn size="small" color="red" variant="tonal">Delete</v-btn>
                         </div>
                     </template>

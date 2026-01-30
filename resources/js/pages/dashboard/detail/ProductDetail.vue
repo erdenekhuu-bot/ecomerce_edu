@@ -29,6 +29,8 @@ const props = defineProps<{
         description: string;
     }>;
 }>();
+const size = ['XS', 'S', 'M', 'L', 'XL'];
+const color = ['Red', 'Blue', 'Green', 'Black', 'White'];
 </script>
 <template>
     <Head title="Product" />
@@ -49,6 +51,13 @@ const props = defineProps<{
                         v-model="props.detail.category_id"
                     />
                     <v-file-input name="image" label="Product image" style="width: 20%" show-size />
+                    <v-select name="size" label="Size" style="width: 30%" :items="size" />
+                    <v-select name="color" label="Color" style="width: 30%" :items="color" />
+                    <v-text-field name="total" label="Total count" type="number" style="width: 30%" />
+                    <v-text-field name="stock" label="Stock" type="number" style="width: 30%" />
+                    <v-textarea name="additional_info" label="Additional info" style="width: 50%" />
+                    <v-text-field name="rate" label="Rate" type="number" style="width: 30%" />
+
                     <Button type="submit" class="mt-2 w-full" tabindex="3" :disabled="processing">
                         <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
                         Submit
