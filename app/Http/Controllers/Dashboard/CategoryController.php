@@ -18,7 +18,7 @@ class CategoryController extends Controller
     public function index(): Response
     {
         $record=DB::table('categories')->get();
-        return Inertia::render('DashCategory',[
+        return Inertia::render('dashboard/menulist/DashCategory',[
             'record'=>$record,
         ]);
     }
@@ -28,7 +28,7 @@ class CategoryController extends Controller
      */
     public function create(Request $request):Response
     {
-       return Inertia::render('dashboard/FormCategory');
+       return Inertia::render('dashboard/form/FormCategory');
     }
 
     /**

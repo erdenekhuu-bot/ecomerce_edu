@@ -5,7 +5,6 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Inertia\Response;
 use Illuminate\Support\Facades\DB;
-use function Laravel\Prompts\select;
 
 class Welcome extends Controller
 {

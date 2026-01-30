@@ -4,7 +4,6 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
-import PlaceholderPattern from '../components/PlaceholderPattern.vue';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -38,13 +37,13 @@ const props = defineProps<{
                 <v-data-table-server
                     density="compact"
                     item-key="id"
-                    :columns="[
+                    :headers="[
                         { title: 'id', key: 'id' },
                         { title: 'image', key: 'image' },
                         { title: 'name', key: 'name' },
                         { title: 'description', key: 'description' },
                         { title: 'slug', key: 'slug' },
-                        { title: 'Actions', key: 'actions'},
+                        { title: 'Actions', key: 'actions', sortable: false },
                     ]"
                     :items="props.products"
                     :items-length="props.products.length"
@@ -54,25 +53,11 @@ const props = defineProps<{
                         <span v-else class="text-gray-400">No Image</span>
                     </template>
                     <template v-slot:[`item.actions`]="{ item }">
-  <div class="flex gap-2">
-    <Link
-      :href="ProductController.edit(item.id)"
-      class="text-blue-600 hover:underline"
-    >
-      Edit
-    </Link>
-
-    <v-btn
-      size="small"
-      color="red"
-      variant="tonal"
-    >
-      Delete
-    </v-btn>
-  </div>
-</template>
-
-
+                        <div class="flex items-center gap-2">
+                            <Link :href="ProductController.edit(item.id)" class="text-blue-600 hover:underline"> Edit </Link>
+                            <v-btn size="small" color="red" variant="tonal">Delete</v-btn>
+                        </div>
+                    </template>
                 </v-data-table-server>
             </div>
         </div>

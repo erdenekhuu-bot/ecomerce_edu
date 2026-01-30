@@ -17,7 +17,7 @@ class ProductController extends Controller
     public function index(): Response
     {
         $product=DB::table('products')->select('id','name','slug','image','description','price')->get();
-        return Inertia::render('DashProduct', [
+        return Inertia::render('dashboard/menulist/DashProduct', [
             'products' => $product
         ]);
     }
@@ -28,7 +28,7 @@ class ProductController extends Controller
     public function create(): Response
     {
         $category=DB::table('categories')->select('id','name','description')->get();
-        return Inertia::render('dashboard/FormProduct',[
+        return Inertia::render('dashboard/form/FormProduct',[
             'categories'=>$category
         ]);
     }
@@ -72,7 +72,10 @@ class ProductController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $record=DB::table('products')->where('id','=',(int)$id)->first();
+        return Inertia::render('dashboard/detail/ProductDetail',[
+            'detail'=>$record
+        ]);
     }
 
     /**
@@ -80,7 +83,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        return redirect()->route('productedit');
     }
 
     /**

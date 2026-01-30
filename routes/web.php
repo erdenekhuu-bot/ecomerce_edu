@@ -29,6 +29,8 @@ Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
         'index' => 'product',
         'create' => 'productcreate',
         'store' => 'productstore',
+        'edit'=>'productedit',
+        'update'=>'productupdate'
         ]);
     
     Route::resource('/user', UserController::class)->names([
