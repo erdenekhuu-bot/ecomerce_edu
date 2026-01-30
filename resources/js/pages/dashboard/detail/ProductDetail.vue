@@ -48,6 +48,7 @@ const props = defineProps<{
                         style="width: 30%"
                         v-model="props.detail.category_id"
                     />
+                    <v-file-input name="image" label="Product image" style="width: 20%" show-size />
                     <Button type="submit" class="mt-2 w-full" tabindex="3" :disabled="processing">
                         <LoaderCircle v-if="processing" class="h-4 w-4 animate-spin" />
                         Submit
