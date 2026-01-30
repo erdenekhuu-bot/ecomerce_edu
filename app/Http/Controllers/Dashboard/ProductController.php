@@ -6,7 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Response;
-use App\Http\Requests\ProductRequest;
+use App\Http\Requests\Product\ProductRequest;
+use App\Http\Requests\Product\ProductDetails;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 class ProductController extends Controller
@@ -86,7 +87,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id): RedirectResponse
+    public function update(ProductDetails $request, string $id): RedirectResponse
     {
         return redirect()->route('productedit');
     }
