@@ -73,8 +73,10 @@ class ProductController extends Controller
     public function edit(string $id)
     {
         $record=DB::table('products')->where('id','=',(int)$id)->first();
+        $category=DB::table('categories')->select('id','name','description')->get();
         return Inertia::render('dashboard/detail/ProductDetail',[
-            'detail'=>$record
+            'detail'=>$record,
+            'categories'=>$category
         ]);
     }
 
@@ -83,7 +85,8 @@ class ProductController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        return redirect()->route('productedit');
+        return dump($request->all());
+        // return redirect()->route('productedit');
     }
 
     /**
