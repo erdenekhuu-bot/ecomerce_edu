@@ -53,7 +53,7 @@ const getImage = (imageUrl: string) => {
             <v-container>
                 <section v-if="props.category.length > 0" class="">
                     <p class="text-2xl font-bold">Browse By Category</p>
-                    <div class="flex justify-between">
+                    <div class="flex flex-wrap justify-between">
                         <div v-for="item in props.category" :key="item.id" class="m-4 h-[145px] w-[170px] rounded-lg border p-4">
                             <div class="text-center">
                                 <Link :href="`/category/list/${item.id}`">

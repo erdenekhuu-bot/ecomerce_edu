@@ -4,7 +4,7 @@ import AppLayout from '@/layouts/AppLayout.vue';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
 import { Head, Link } from '@inertiajs/vue3';
-
+import { ref } from 'vue';
 const breadcrumbs: BreadcrumbItem[] = [
     {
         title: 'Dashboard',
@@ -24,6 +24,7 @@ type Product = Array<{
 const props = defineProps<{
     products: Product;
 }>();
+const itemsPerPage = ref(10);
 </script>
 
 <template>
@@ -34,7 +35,7 @@ const props = defineProps<{
                 <Link :href="ProductController.create()"> Create product </Link>
             </div>
             <div class="relative min-h-[100vh] flex-1 rounded-xl border border-sidebar-border/70 md:min-h-min dark:border-sidebar-border">
-                <v-data-table-server
+                <v-data-table
                     density="compact"
                     item-key="id"
                     :headers="[
@@ -46,7 +47,8 @@ const props = defineProps<{
                         { title: 'Actions', key: 'actions', sortable: false },
                     ]"
                     :items="props.products"
-                    :items-length="props.products.length"
+                    :items-per-page-options="[5, 10, 20, 50, -1]"
+                    v-model:items-per-page="itemsPerPage"
                 >
                     <template v-slot:[`item.image`]="{ item }">
                         <img v-if="item.image" :src="'/' + item.image" alt="" class="h-16 w-16 rounded object-cover" />
@@ -59,7 +61,7 @@ const props = defineProps<{
                             <Link :href="ProductController.destroy(item.id)" class="text-red-600 hover:underline">Delete</Link>
                         </div>
                     </template>
-                </v-data-table-server>
+                </v-data-table>
             </div>
         </div>
     </AppLayout>
