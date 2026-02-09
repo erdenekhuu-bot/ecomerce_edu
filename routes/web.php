@@ -6,6 +6,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Dashboard\UserController;
 use App\Http\Controllers\Dashboard\CategoryController;
 use App\Http\Controllers\Dashboard\ProductController;
+use App\Http\Controllers\DashBoard\AboutUsController;
 use App\Http\Controllers\Welcome;
 
 Route::prefix('/')->group(function () {
@@ -33,6 +34,10 @@ Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
         'update'=>'productupdate',
         'show'=>'productshow'
         ]);
+    
+    Route::resource('/about',AboutUsController::class)->names([
+        'index'=>'abouts'
+    ]);
     
     Route::resource('/user', UserController::class)->names([
         'index' => 'user',

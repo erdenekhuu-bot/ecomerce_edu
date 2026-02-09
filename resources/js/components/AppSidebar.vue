@@ -3,10 +3,10 @@ import NavFooter from '@/components/NavFooter.vue';
 import NavMain from '@/components/NavMain.vue';
 import NavUser from '@/components/NavUser.vue';
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuButton, SidebarMenuItem } from '@/components/ui/sidebar';
-import { category, dashboard, product, user } from '@/routes';
+import { abouts, category, dashboard, product, user } from '@/routes';
 import { type NavItem } from '@/types';
 import { Link } from '@inertiajs/vue3';
-import { LayoutGrid, ListCheck, Package2, User } from 'lucide-vue-next';
+import { Contact, LayoutGrid, ListCheck, Package2, User } from 'lucide-vue-next';
 import AppLogo from './AppLogo.vue';
 
 const mainNavItems: NavItem[] = [
@@ -24,6 +24,11 @@ const mainNavItems: NavItem[] = [
         title: 'Product',
         href: product(),
         icon: Package2,
+    },
+    {
+        title: 'About Us',
+        href: abouts(),
+        icon: Contact,
     },
     {
         title: 'Users',
