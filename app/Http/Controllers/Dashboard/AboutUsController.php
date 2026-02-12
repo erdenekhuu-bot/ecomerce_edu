@@ -12,7 +12,7 @@ class AboutUsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('dashboard/menulist/DashAboutUs',[
             
@@ -22,9 +22,9 @@ class AboutUsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
-        //
+        return Inertia::render('dashboard/form/FormAboutUs');
     }
 
     /**

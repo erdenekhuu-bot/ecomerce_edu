@@ -36,7 +36,8 @@ Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
         ]);
     
     Route::resource('/about',AboutUsController::class)->names([
-        'index'=>'abouts'
+        'index'=>'abouts',
+        'create'=>'aboutscreate'
     ]);
     
     Route::resource('/user', UserController::class)->names([
