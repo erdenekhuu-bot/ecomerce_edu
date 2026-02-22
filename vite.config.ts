@@ -26,4 +26,7 @@ export default defineConfig({
         }),
         vuetify({ autoImport: true }),
     ],
+    build: {
+        outDir: 'public/build',
+    },
 });

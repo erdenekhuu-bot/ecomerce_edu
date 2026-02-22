@@ -1,0 +1,71 @@
+version: '3.9'
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:15-alpine
+    container_name: laravel_postgres
+    environment:
+      POSTGRES_DB: laravel
+      POSTGRES_USER: laravel
+      POSTGRES_PASSWORD: laravel_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - '5432:5432'
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U laravel']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # PHP-FPM Application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ecommerce_app
+    environment:
+      APP_ENV: production
+      APP_DEBUG: 'false'
+      APP_KEY: base64:${APP_KEY:-}
+      DB_CONNECTION: pgsql
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: ecommerce
+      DB_USERNAME: admin
+      DB_PASSWORD: admin
+    volumes:
+      - ./:/app
+      - app_storage:/app/storage
+      - app_bootstrap:/app/bootstrap/cache
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - laravel_network
+
+  # Nginx Web Server (Production-ready)
+  web:
+    image: nginx:alpine
+    container_name: laravel_nginx
+    ports:
+      - '80:80'
+      - '443:443'
+    volumes:
+      - ./:/app:ro
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+    depends_on:
+      - app
+    networks:
+      - laravel_network
+
+volumes:
+  postgres_data:
+  app_storage:
+  app_bootstrap:
+
+networks:
+  laravel_network:
+    driver: bridge
