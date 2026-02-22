@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Category, Service } from '@/types';
 import { Link } from '@inertiajs/vue3';
+import 'swiper/css';
+import { Swiper, SwiperSlide } from 'swiper/vue';
 import { ref } from 'vue';
 import Welcome from '../Welcome.vue';
 
@@ -50,19 +52,26 @@ const getImage = (imageUrl: string) => {
 
             <v-container>
                 <section v-if="props.category.length > 0" class="">
-                    <p class="text-2xl font-bold">Browse By Category</p>
-                    <div class="flex flex-wrap justify-between">
-                        <div v-for="item in props.category" :key="item.id" class="m-4 h-[145px] w-[170px] rounded-lg border p-4">
-                            <div class="text-center">
-                                <Link :href="`/category/list/${item.id}`">
-                                    <span class="font-bold">{{ item.name }}</span>
+                    <p class="m-8 text-3xl font-bold">Browse By Category</p>
+                    <swiper
+                        :slides-per-view="4"
+                        :space-between="20"
+                        :direction="'horizontal'"
+                        :navigation="true"
+                        :pagination="{ clickable: true }"
+                        :loop="true"
+                    >
+                        <swiper-slide v-for="item in props.category" :key="item.id">
+                            <Link :href="`/category/list/${item.id}`">
+                                <v-card class="w-64">
                                     <div class="flex justify-center">
-                                        <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
+                                        <v-img cover :src="'/' + item.image" class="object-cover" />
                                     </div>
-                                </Link>
-                            </div>
-                        </div>
-                    </div>
+                                    <v-card-title class="text-center">{{ item.name }}</v-card-title>
+                                </v-card>
+                            </Link>
+                        </swiper-slide>
+                    </swiper>
                 </section>
                 <section v-else>
                     <template>Nothing to show service</template>
@@ -70,19 +79,30 @@ const getImage = (imageUrl: string) => {
             </v-container>
             <v-container>
                 <section v-if="props.products.length > 0">
-                    <div class="flex justify-between">
-                        <div v-for="item in props.products" :key="item.id">
-                            <Link :href="`/detail/${item.id}`">
-                                <div class="m-4 w-[230px] rounded-xl">
-                                    <div class="flex justify-center">
-                                        <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
-                                    </div>
-                                    <p class="font-bold">{{ item.name }}</p>
-                                    <p class="font-bold text-red-500">${{ Number(item.price) }}</p>
-                                </div>
-                            </Link>
-                        </div>
+                    <div class="m-8 flex justify-between">
+                        <p class="text-3xl font-bold">Best Selling Products</p>
+                        <v-btn :width="150" variant="tonal" color="primary" :href="'/products'">View All</v-btn>
                     </div>
+                    <swiper
+                        :slides-per-view="4"
+                        :space-between="20"
+                        :direction="'horizontal'"
+                        :navigation="true"
+                        :pagination="{ clickable: true }"
+                        :loop="true"
+                    >
+                        <swiper-slide v-for="item in props.products" :key="item.id">
+                            <Link :href="`/detail/${item.id}`">
+                                <v-card class="w-64">
+                                    <div class="flex justify-center">
+                                        <v-img cover :src="'/' + item.image" class="object-cover" />
+                                    </div>
+                                    <v-card-title class="text-center">{{ item.name }}</v-card-title>
+                                    <v-card-subtitle class="text-center text-red-500">${{ Number(item.price) }}</v-card-subtitle>
+                                </v-card>
+                            </Link>
+                        </swiper-slide>
+                    </swiper>
                 </section>
                 <section v-else>
                     <template>Nothing to show service</template>
@@ -92,7 +112,35 @@ const getImage = (imageUrl: string) => {
                 <v-img cover :src="musicbanner" class="object-cover" />
             </v-container>
             <v-container>
-                <section>Nothing to show product</section>
+                <section v-if="props.products.length > 0">
+                    <div class="m-8 flex justify-between">
+                        <p class="text-3xl font-bold">Explore Our Products</p>
+                        <v-btn :width="150" variant="tonal" color="primary" :href="'/products'">View All</v-btn>
+                    </div>
+                    <swiper
+                        :slides-per-view="4"
+                        :space-between="20"
+                        :direction="'horizontal'"
+                        :navigation="true"
+                        :pagination="{ clickable: true }"
+                        :loop="true"
+                    >
+                        <swiper-slide v-for="item in props.products" :key="item.id">
+                            <Link :href="`/detail/${item.id}`">
+                                <v-card class="w-64">
+                                    <div class="flex justify-center">
+                                        <v-img cover :src="'/' + item.image" class="object-cover" />
+                                    </div>
+                                    <v-card-title class="text-center">{{ item.name }}</v-card-title>
+                                    <v-card-subtitle class="text-center text-red-500">${{ Number(item.price) }}</v-card-subtitle>
+                                </v-card>
+                            </Link>
+                        </swiper-slide>
+                    </swiper>
+                </section>
+                <section v-else>
+                    <template>Nothing to show service</template>
+                </section>
             </v-container>
         </main>
     </Welcome>

@@ -2,50 +2,31 @@
 import Welcome from '@/pages/Welcome.vue';
 import { Link } from '@inertiajs/vue3';
 
-import { Navigation } from 'swiper/modules';
-import { Swiper, SwiperSlide } from 'swiper/vue';
-
 const props = defineProps<{
-    list: Array<{ id: number; name: string; price: string; image: string }>;
+    list: Array<{ id: number; name: string; slug: string; description: string; price: string; image: string }>;
 }>();
 </script>
-
 <template>
     <Welcome>
-        <v-container class="overflow-visible">
+        <v-container>
             <section v-if="props.list.length > 0">
-                <Swiper class="mySwiper" :modules="[Navigation]" navigation :spaceBetween="16" :slidesPerView="'auto'" :grabCursor="true">
-                    <SwiperSlide v-for="item in props.list" :key="item.id" class="productSlide">
+                <div class="flex justify-between">
+                    <div v-for="item in props.list" :key="item.id">
                         <Link :href="`/detail/${item.id}`">
                             <div class="m-4 w-[230px] rounded-xl">
                                 <div class="flex justify-center">
-                                    <img v-if="item.image" :src="'/' + item.image" alt="" />
+                                    <img v-if="item.image" :src="'/' + item.image" alt="" class="" />
                                 </div>
                                 <p class="font-bold">{{ item.name }}</p>
                                 <p class="font-bold text-red-500">${{ Number(item.price) }}</p>
                             </div>
                         </Link>
-                    </SwiperSlide>
-                </Swiper>
+                    </div>
+                </div>
             </section>
-
-            <section v-else>Nothing to show service</section>
+            <section v-else>
+                <template>Nothing to show service</template>
+            </section>
         </v-container>
     </Welcome>
 </template>
-
-<style scoped>
-.productSlide {
-    width: 230px;
-}
-.mySwiper {
-    position: relative;
-}
-
-.mySwiper :deep(.swiper-wrapper) {
-    display: flex;
-}
-.mySwiper :deep(.swiper-slide) {
-    flex-shrink: 0;
-}
-</style>
