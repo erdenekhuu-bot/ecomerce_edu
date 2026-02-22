@@ -1,7 +1,16 @@
-# Stage 1: Build Node.js frontend (TypeScript)
-FROM node:18-alpine AS frontend-build
-WORKDIR /app/frontend
+# Stage 1: Build Node.js frontend (needs PHP for wayfinder plugin)
+FROM node:latest AS frontend-build
+
+# Install PHP for wayfinder plugin
+RUN apt-get update && apt-get install -y \
+    php \
+    php-cli \
+    php-common \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
 COPY package*.json ./
+COPY yarn.lock ./
 RUN yarn install --frozen-lockfile
 COPY . .
 RUN yarn build
@@ -39,11 +48,11 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /app
 
-# Copy PHP application
+# Copy entire project
 COPY . .
 
 # Copy built frontend assets from Stage 1
-COPY --from=frontend-build /app/frontend/dist ./public/dist
+COPY --from=frontend-build /app/public/build ./public/build
 
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader
