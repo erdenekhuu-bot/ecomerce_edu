@@ -32,8 +32,10 @@ Route::middleware(['auth','verified'])->prefix('dashboard')->group(function () {
         'store' => 'productstore',
         'edit'=>'productedit',
         'update'=>'productupdate',
-        'show'=>'productshow'
+        'show'=>'productshow',
         ]);
+    
+    Route::patch('/product/update-image/{id}', [ProductController::class, 'updateImage'])->name('productupdateimage');
     
     Route::resource('/about',AboutUsController::class)->names([
         'index'=>'abouts',

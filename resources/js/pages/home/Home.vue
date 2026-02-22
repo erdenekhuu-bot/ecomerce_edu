@@ -12,8 +12,6 @@ const props = defineProps<{
     products: Array<{
         id: number;
         name: string;
-        slug: string;
-        description: string;
         price: string;
         image: string;
     }>;
@@ -29,8 +27,8 @@ const getImage = (imageUrl: string) => {
         <main class="w-full bg-white text-black">
             <v-container>
                 <section v-if="service.length > 0">
-                    <div class="flex">
-                        <div class="w-1/4 border border-[#19140035]">
+                    <div class="flex justify-center gap-4">
+                        <div class="w-2/3 border border-[#19140035]">
                             <p
                                 v-for="value in service"
                                 :key="value.id"
@@ -40,7 +38,7 @@ const getImage = (imageUrl: string) => {
                                 {{ value.name }}
                             </p>
                         </div>
-                        <div class="w-3/4 p-4" v-if="selectedImage || service[0].image">
+                        <div class="w-3/3 p-4" v-if="selectedImage || service[0].image">
                             <v-img cover :src="selectedImage || service[0].image" class="object-cover" />
                         </div>
                     </div>

@@ -11,6 +11,7 @@ use App\Http\Requests\Product\ProductDetails;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
 class ProductController extends Controller
 {
     /**
@@ -66,7 +67,13 @@ class ProductController extends Controller
      */
     public function show(string $id): Response
     {
-        $record=DB::table('products')->where('id','=',(int)$id)->select('id','image')->first();
+
+        $record=DB::table('products')
+            ->leftJoin('product_images', 'products.id', '=', 'product_images.product_id')
+            ->where('products.id', '=', (int)$id)
+            ->select('products.id', 'products.image', 'product_images.image1','product_images.image2','product_images.image3','product_images.image4')
+            ->first();
+        
         return Inertia::render('dashboard/detail/ProductImage',[
             'detail'=>$record
         ]);
@@ -88,32 +95,45 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(ProductDetails $request, string $id): RedirectResponse
+    public function update(Request $request, string $id): RedirectResponse
     {
-        $rule = $request->validated();
-        if ($request->hasFile('image')) {
-            $old = DB::table('products')->where('id', (int)$id)->value('image');
-            if ($old) {
-                Storage::disk('public')->delete($old);
+        $map = [
+            'first'  => 'image1',
+            'second' => 'image2',
+            'third'  => 'image3',
+            'fourth' => 'image4',
+        ];
+
+        $data = array();
+
+        foreach ($map as $input => $column) {
+            if ($request->hasFile($input)) {
+                $file = $request->file($input);
+
+                $name = time().'_'.$file->getClientOriginalName();
+                $file->move(public_path('images'), $name);
+
+                $data[$column] = 'images/'.$name;
             }
-            $rule['image'] = $request->file('image')->store('products', 'public'); 
-        } else {
-            unset($rule['image']);
         }
 
-        DB::table('products')
-            ->where('id', (int) $id)
-            ->update([
-                'name'        => $rule['name'],
-                'stock'        => $rule['stock'],
-                'image'       => $rule['image'],   
-                'description' => $rule['description'],
-                'category_id' => $rule['category_id'],
-                'price'       => $rule['price'],
-                'updated_at'  => now(),
-            ]);
-        return redirect()->route('productupdate');
+        if (!empty($data)) {
+            $data['updated_at'] = now();
+
+            $exists = DB::table('product_images')->where('product_id', (int)$id)->exists();
+
+            if ($exists) {
+                DB::table('product_images')->where('product_id', (int)$id)->update($data);
+            } else {
+                $data['product_id'] = (int)$id;
+                $data['created_at'] = now();
+                DB::table('product_images')->insert($data);
+            }
+        }
+
+        return redirect()->route('productshow', ['product' => (int)$id]);
     }
+  
 
     /**
      * Remove the specified resource from storage.
