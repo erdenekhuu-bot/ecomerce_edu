@@ -30,7 +30,7 @@ const getImage = (imageUrl: string) => {
             <v-container>
                 <section v-if="service.length > 0">
                     <div class="flex justify-center gap-4">
-                        <div class="w-2/3 border border-[#19140035]">
+                        <div class="w-1/3 border border-[#19140035]">
                             <p
                                 v-for="value in service"
                                 :key="value.id"
@@ -117,17 +117,10 @@ const getImage = (imageUrl: string) => {
                         <p class="text-3xl font-bold">Explore Our Products</p>
                         <v-btn :width="150" variant="tonal" color="primary" :href="'/products'">View All</v-btn>
                     </div>
-                    <swiper
-                        :slides-per-view="4"
-                        :space-between="20"
-                        :direction="'horizontal'"
-                        :navigation="true"
-                        :pagination="{ clickable: true }"
-                        :loop="true"
-                    >
-                        <swiper-slide v-for="item in props.products" :key="item.id">
+                    <div class="flex flex-wrap justify-between">
+                        <div v-for="item in props.products" :key="item.id" class="m-4 w-64">
                             <Link :href="`/detail/${item.id}`">
-                                <v-card class="w-64">
+                                <v-card>
                                     <div class="flex justify-center">
                                         <v-img cover :src="'/' + item.image" class="object-cover" />
                                     </div>
@@ -135,8 +128,8 @@ const getImage = (imageUrl: string) => {
                                     <v-card-subtitle class="text-center text-red-500">${{ Number(item.price) }}</v-card-subtitle>
                                 </v-card>
                             </Link>
-                        </swiper-slide>
-                    </swiper>
+                        </div>
+                    </div>
                 </section>
                 <section v-else>
                     <template>Nothing to show service</template>
