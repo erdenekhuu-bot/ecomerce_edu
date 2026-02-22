@@ -18,7 +18,11 @@ class Welcome extends Controller
             'category' => $category,
             'service' => $service,
             'musicbanner'=> asset('musicbanner.png'),
-            'products'=>$products
+            'products'=>$products,
+            'playstation'=> asset('playstation.png'),
+            'womenbanner'=> asset('womencollection.png'),
+            'speakerbanner'=> asset('speaker.png'),
+            'perfunebanner'=> asset('perfune.png')
         ]);
     }
     public function contact():Response {

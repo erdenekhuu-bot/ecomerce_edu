@@ -17,6 +17,10 @@ const props = defineProps<{
         price: string;
         image: string;
     }>;
+    playstation: string;
+    womenbanner: string;
+    speakerbanner: string;
+    perfunebanner: string;
 }>();
 
 const selectedImage = ref<string | null>(null);
@@ -133,6 +137,29 @@ const getImage = (imageUrl: string) => {
                 </section>
                 <section v-else>
                     <template>Nothing to show service</template>
+                </section>
+                <section>
+                    <v-row justify="center" class="gap-4">
+                        <v-col>
+                            <v-img cover :src="playstation" class="object-cover" />
+                        </v-col>
+                        <v-col>
+                            <v-row>
+                                <v-col>
+                                    <v-img cover :src="womenbanner" class="object-cover" />
+                                    <v-row>
+                                        <v-col>
+                                            <v-img cover :src="speakerbanner" class="object-cover" />
+                                        </v-col>
+
+                                        <v-col>
+                                            <v-img cover :src="perfunebanner" class="object-cover" />
+                                        </v-col>
+                                    </v-row>
+                                </v-col>
+                            </v-row>
+                        </v-col>
+                    </v-row>
                 </section>
             </v-container>
         </main>
